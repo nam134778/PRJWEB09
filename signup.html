@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PRJWEB | Sign up</title>
+        <link href="https://fonts.googleapis.com/css?family=Assistant:400,700" rel="stylesheet"><link rel="stylesheet" href="./style.css">
+         <meta charset="UTF-8"/>
+    </head>
+    <body>
+        <section class='login' id='login' style="width: 400px; ">
+            <div class='head'>
+            <h1 class='company' style="margin-top: -10px;">SIGN UP</h1>
+            </div>
+            <div class='form'>
+              <form>
+            <input type="text" id="email"  class="text"  name="email"    placeholder="Email"    />
+            <input type="password" placeholder='password' class='password' name="password" id="password"><br>
+                <a href="#" class='btn-login' id='signup' type="submit" name="signup">Register</a>
+            <a href="index.html" class="forgot" style="margin-top: 0px;">Sign In</a>
+              </form>
+            </div>
+          </section>
+        <!-- <div>
+            <h1>Đăng ký</h1>
+
+            <input type="text"      id="email"    name="email"    placeholder="Email"    />
+            <input type="password"  id="password" name="password" placeholder="Mật khẩu" />
+            <input type="submit"    id="signup"   name="submit"   value="Đăng ký"        />
+
+            <a href="index.html">Đăng nhập</a>
+        </div> -->
+    </body>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
+        import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
+
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js";
+        import { getFirestore, doc, addDoc, getDoc, getDocs, updateDoc, onSnapshot, collection, query, where } from 'https://www.gstatic.com/firebasejs/9.19.1/firebase-firestore.js';
+           
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyAgXRktPnpQ_tToW7tXQdPlxSXRf9_VK88",
+          authDomain: "prjweb-d2e8d.firebaseapp.com",
+          databaseURL: "https://prjweb-d2e8d-default-rtdb.asia-southeast1.firebasedatabase.app",
+          projectId: "prjweb-d2e8d",
+          storageBucket: "prjweb-d2e8d.appspot.com",
+          messagingSenderId: "722705639877",
+          appId: "1:722705639877:web:4cfedddcf5ec0e82fb83ac",
+          measurementId: "G-K50Z8KJNX7"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const auth = getAuth();
+        const db = getFirestore(app);
+
+        signup.addEventListener('click', (e) => {
+            var email       = document.getElementById('email').value;
+            var password    = document.getElementById('password').value;
+            createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed in 
+                const user = userCredential.user;
+                try {
+
+                const docRef = addDoc(collection(db, "Bang_luong"), {
+                        Email: email,
+                        luong: 0,
+                        hours: 0,
+
+                    });
+                    console.log("Document written with ID: ", docRef.id);
+                    } catch (e) {
+                    console.error("Error adding document: ", e);
+                    }
+                    try {
+
+                const docRef = addDoc(collection(db, "feedback"), {
+                        Email: email,
+                        Content: "",
+
+                    });
+                    console.log("Document written with ID: ", docRef.id);
+                    } catch (e) {
+                    console.error("Error adding document: ", e);
+                    }
+                alert('user created');
+                // ...
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // ..
+                alert(errorMessage);
+            });
+        })
+        
+//                 try {
+
+//   const docRef = await addDoc(collection(db, "Bang_luong"), {
+//              Email: email,
+
+//         });
+//         console.log("Document written with ID: ", docRef.id);
+//         } catch (e) {
+//         console.error("Error adding document: ", e);
+//         }
+
+//         try {
+
+// const docRef = await addDoc(collection(db, "feedback"), {
+//            Email: email,
+//            Content: "",
+
+//       });
+//       console.log("Document written with ID: ", docRef.id);
+//       } catch (e) {
+//       console.error("Error adding document: ", e);
+//       }
+      </script>
+
+</html>
