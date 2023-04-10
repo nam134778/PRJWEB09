@@ -137,6 +137,22 @@
         const email = localStorage.getItem("email");
         console.log(email);
 
+//         const querySnapshot2 = await getDocs(collection(db, "Bang_luong"));
+//         var content = '';
+// querySnapshot2.forEach((doc) => {
+//                 var val = doc.data();
+//                 // content +='<tr>';
+//                 content +='<tr>';
+//                 content += `<td>` + val.Email + '</td>';
+//                 content += `<td>` + val.luong + '</td>';
+//                 content += `<td>` + val.hours + '</td>';
+
+//                 content += '</tr>';
+//   // doc.data() is never undefined for query doc snapshots
+//   console.log(doc.id, " => ", doc.data());
+// });
+// $('#ex-table').append(content);
+    async function GetDoc() {
         const querySnapshot2 = await getDocs(collection(db, "Bang_luong"));
         var content = '';
 querySnapshot2.forEach((doc) => {
@@ -152,6 +168,9 @@ querySnapshot2.forEach((doc) => {
   console.log(doc.id, " => ", doc.data());
 });
 $('#ex-table').append(content);
+    }
+
+    GetDoc();
 
     // async function UpdateDoc() {
     //     var feedback = document.getElementById("feedback").value;
@@ -185,6 +204,13 @@ $('#ex-table').append(content);
                     });
                     console.log("Document written with ID: ", docRef.id);
                     alert('add successfully');
+                    var tableHeaderRowCount = 1;
+                    var table = document.getElementById('ex-table');
+                    var rowCount = table.rows.length;
+                    for (var i = tableHeaderRowCount; i < rowCount; i++) {
+                        table.deleteRow(tableHeaderRowCount);
+                    }
+                    GetDoc();
                     // location.reload();
                     } catch (e) {
                     console.error("Error adding document: ", e);
@@ -226,6 +252,14 @@ $('#ex-table').append(content);
         });
             }
         }
+        alert('delete successfully');
+        var tableHeaderRowCount = 1;
+        var table = document.getElementById('ex-table');
+        var rowCount = table.rows.length;
+        for (var i = tableHeaderRowCount; i < rowCount; i++) {
+            table.deleteRow(tableHeaderRowCount);
+        }
+        GetDoc();
     }
     delete2.addEventListener('click', DeleteDoc);
 
@@ -241,6 +275,14 @@ $('#ex-table').append(content);
         const docRef = doc(db, 'Bang_luong', docref.id);
         setDoc(docRef, {hours: hours, luong: salary},{merge:true})
         });
+        alert('update successfully');
+        var tableHeaderRowCount = 1;
+        var table = document.getElementById('ex-table');
+        var rowCount = table.rows.length;
+        for (var i = tableHeaderRowCount; i < rowCount; i++) {
+            table.deleteRow(tableHeaderRowCount);
+        }
+        GetDoc();
 
     }
     update2.addEventListener('click', UpdateDoc);
